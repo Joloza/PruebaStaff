@@ -5,5 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.jorgelondono.pruebastaff.entities.ListaReproduccion;
 
 public interface ListaReproduccionDao extends CrudRepository<ListaReproduccion, Integer> {
-    Iterable<ListaReproduccion> findListaReproduccionDaoByDescripcion(String descripcion);
+
+    Iterable<ListaReproduccion> findDescripcionByNombre(String nombre);
+
 }

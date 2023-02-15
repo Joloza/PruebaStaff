@@ -2,6 +2,7 @@ package com.jorgelondono.pruebastaff.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,14 +30,16 @@ public class Controller {
         return listaDao.findAll();
     }
 
-    @GetMapping("/lists/")
-    public Iterable<ListaReproduccion> consultarDescripcion(@RequestParam String descripcion) {
-        return listaDao.findListaReproduccionDaoByDescripcion(descripcion);
+    // GET NOMBRE
+    @GetMapping("/lists/listName")
+    public Iterable<ListaReproduccion> consultarDescripcion(@RequestParam String nombre) {
+        return listaDao.findDescripcionByNombre(nombre);
     }
 
     // DELETE
-    @GetMapping("/lists/listName")
+    @DeleteMapping("/lists/listName")
     public void borrarLista(@RequestParam int id) {
         listaDao.deleteById(id);
     }
+
 }

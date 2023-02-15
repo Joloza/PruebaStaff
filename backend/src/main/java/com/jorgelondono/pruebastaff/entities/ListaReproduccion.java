@@ -1,6 +1,6 @@
 package com.jorgelondono.pruebastaff.entities;
 
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -20,8 +20,8 @@ public class ListaReproduccion {
     @Column(nullable = true)
     private String descripcion;
 
-    @ElementCollection
-    @Column()
-    private List<String> cancion;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "lista_reproduccion_canciones", joinColumns = @JoinColumn(name = "lista_reproduccion_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "canciones_id", referencedColumnName = "id"))
+    private Set<Canciones> canciones = new HashSet<>();
 
 }
