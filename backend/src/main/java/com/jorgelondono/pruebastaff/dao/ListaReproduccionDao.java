@@ -6,6 +6,6 @@ import com.jorgelondono.pruebastaff.entities.ListaReproduccion;
 
 public interface ListaReproduccionDao extends CrudRepository<ListaReproduccion, Integer> {
 
-    Iterable<ListaReproduccion> findDescripcionByNombre(String nombre);
+    Iterable<ListaReproduccion> findDescripcionByNombreContaining(String nombre);
 
 }

@@ -1,6 +1,8 @@
 package com.jorgelondono.pruebastaff.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,8 +22,13 @@ public class Controller {
 
     // POST
     @PostMapping("/lists")
-    public ListaReproduccion crearLista(@RequestBody ListaReproduccion nuevaLista) {
-        return listaDao.save(nuevaLista);
+    public ResponseEntity<ListaReproduccion> crearLista(@RequestBody ListaReproduccion nuevaLista) {
+        if (nuevaLista.getNombre() == null) {
+            return ResponseEntity.badRequest().build();
+        } else {
+            ListaReproduccion listaGuardada = listaDao.save(nuevaLista);
+            return ResponseEntity.status(HttpStatus.CREATED).body(listaGuardada);
+        }
     }
 
     // GET
@@ -32,14 +39,24 @@ public class Controller {
 
     // GET NOMBRE
     @GetMapping("/lists/listName")
-    public Iterable<ListaReproduccion> consultarDescripcion(@RequestParam String nombre) {
-        return listaDao.findDescripcionByNombre(nombre);
+    public ResponseEntity<Iterable<ListaReproduccion>> consultarDescripcion(@RequestParam String nombre) {
+        Iterable<ListaReproduccion> listas = listaDao.findDescripcionByNombreContaining(nombre);
+        if (listas.iterator().hasNext()) {
+            return ResponseEntity.ok(listas);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // DELETE
     @DeleteMapping("/lists/listName")
-    public void borrarLista(@RequestParam int id) {
-        listaDao.deleteById(id);
+    public ResponseEntity<Void> borrarLista(@RequestParam int id) {
+        if (listaDao.existsById(id)) {
+            listaDao.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
