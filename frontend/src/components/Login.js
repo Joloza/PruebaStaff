@@ -1,7 +1,7 @@
 import React, {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {getRegistrarUsuario,getLogin,initAxiosInterceptors} from "./../services/listaReproduccionApi";
-import './../assets/login.css';
+import {getRegistrarUsuario,getLogin} from "./../services/listaReproduccionApi";
+import './../assets/styles.css';
 
 
 const Login=()=>{
@@ -37,15 +37,16 @@ const Login=()=>{
         const datos = {
             nombre: nombre,
             contrasena: contrasena
-          };
+        };
         try {
-            const response = await getLogin(datos).then(val => console.log(val.data));
-            localStorage.setItem('token', response);
+            const response = await getLogin(datos);
+            const token = response.data;
+            localStorage.setItem('token', token);
             navigate('/Home');
-          return response;
+            return token;
         } catch (error) {
-          alert("ERROR", error);
-          console.error('Error al crear la lista:', error);
+            alert("ERROR", error);
+            console.error('Error al iniciar sesión:', error);
         }
     }
 
@@ -57,9 +58,9 @@ const Login=()=>{
     return(
         
 
-        <div className="form">
+        <div className="formLogin">
             <label>1-Se debe registrar el usuario para poder acceder </label>
-            <input className="button-container" type="submit" value="Registrar usuario" onClick={setUser}/>
+            <input className="buttonHome" type="submit" value="Registrar usuario" onClick={setUser}/>
             <form onSubmit={(onSubmit)}>
                 <div className="input-container">
                     <label>Nombre </label>
