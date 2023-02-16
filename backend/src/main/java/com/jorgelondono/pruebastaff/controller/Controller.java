@@ -14,12 +14,36 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jorgelondono.pruebastaff.entities.ListaReproduccion;
 import com.jorgelondono.pruebastaff.dao.ListaReproduccionDao;
+import com.jorgelondono.pruebastaff.entities.Usuario;
+import com.jorgelondono.pruebastaff.dao.UsuarioDao;
 
 @CrossOrigin(allowedHeaders = "*")
 @RestController
 public class Controller {
     @Autowired
     private ListaReproduccionDao listaDao;
+
+    @Autowired
+    private UsuarioDao usuarioDao;
+
+    /*
+     * // usuario
+     * 
+     * @PostMapping("/registrarUsuario")
+     * public ResponseEntity<String> creareUser(@RequestBody Usuario usuario) {
+     * Usuario existingUser = usuarioDao.findUsuarioByNombre(usuario.getNombre());
+     * if (existingUser != null) {
+     * return new ResponseEntity<String>("El usuario ya existe",
+     * HttpStatus.CONFLICT);
+     * } else {
+     * String contrasenaCifrada =
+     * bCryptPasswordEncoder.encode(usuario.getContrasena());
+     * usuario.setContrasena(contrasenaCifrada);
+     * usuarioDao.save(usuario);
+     * return new ResponseEntity<String>("Usuario creado", HttpStatus.OK);
+     * }
+     * }
+     */
 
     // POST
     @PostMapping("/lists")
