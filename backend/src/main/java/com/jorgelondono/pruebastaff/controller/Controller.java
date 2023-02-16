@@ -3,6 +3,7 @@ package com.jorgelondono.pruebastaff.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,10 +50,11 @@ public class Controller {
     }
 
     // DELETE
+    @Transactional
     @DeleteMapping("/lists/listName")
-    public ResponseEntity<Void> borrarLista(@RequestParam int id) {
-        if (listaDao.existsById(id)) {
-            listaDao.deleteById(id);
+    public ResponseEntity<Void> borrarLista(@RequestParam String nombre) {
+        if (listaDao.existsByNombre(nombre)) {
+            listaDao.deleteByNombre(nombre);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
