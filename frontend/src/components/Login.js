@@ -1,77 +1,79 @@
 import React, {useState } from 'react';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {getRegistrarUsuario,getLogin,initAxiosInterceptors} from "./../services/listaReproduccionApi";
-import axios from 'axios';
+import './../assets/login.css';
 
 
 const Login=()=>{
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [nombre, setNombre] = useState('');
+    const [contrasena, setContrasena] = useState('');
 
-    //let navigate = useNavigate();
+    let navigate = useNavigate();
 
-    function handleEmailChange(event) {
-        setEmail(event.target.value);
+    function handleNameChange(event) {
+        setNombre(event.target.value);
     }
 
-    function handlePasswordChange(event) {
-        setPassword(event.target.value);
-    }
-
-    function handleSubmit(event) {
-        event.preventDefault();
-
-        // Aquí es donde enviarías la solicitud de inicio de sesión al servidor
-        // utilizando las credenciales de email y password ingresadas por el usuario
+    function handleContrasenaChange(event) {
+        setContrasena(event.target.value);
     }
 
     const setUser = async () => {
         const datos = {
-            "nombre": "Lista 2",
-            "email": "1@1.com",
-            "password":"admin"
+            "nombre": "admin",
+            "contrasena":"123"
         };
         try {
             const response = await getRegistrarUsuario(datos);
-            alert("CREADA");
-            console.log('Lista creada con éxito:', response.data);
+            alert("Usuario creado");
+            console.log('Usuario creado:', response.data);
         } catch (error) {
-            alert("ERROR");
-            console.error('Error al crear la lista:', error);
+            console.error('Error al crear usuario:', error);
         }
     };
 
     const loginUser = async () => {
         const datos = {
-          nombre: "a",
-          contrasena: "hola"
-        };
+            nombre: nombre,
+            contrasena: contrasena
+          };
         try {
-          const response = await getLogin(datos);
-          
-          alert("No ERROR",response);
+            const response = await getLogin(datos).then(val => console.log(val.data));
+            localStorage.setItem('token', response);
+            navigate('/Home');
+          return response;
         } catch (error) {
           alert("ERROR", error);
           console.error('Error al crear la lista:', error);
         }
     }
 
+  const onSubmit = ( event ) => {
+    event.preventDefault();
+    loginUser();
+}
 
     return(
-        <div>
-            <form>
-                <label>
-                    Nombre:
-                    <input type="email" value={email} onChange={handleEmailChange} />
-                </label>
-                <label>
-                    Contraseña:
-                    <input type="password" value={password} onChange={handlePasswordChange} />
-                </label>
-                <button onClick={setUser}>Registrar usuario</button>
-                <button onClick={loginUser}>Iniciar sesión</button>
+        
+
+        <div className="form">
+            <label>1-Se debe registrar el usuario para poder acceder </label>
+            <input className="button-container" type="submit" value="Registrar usuario" onClick={setUser}/>
+            <form onSubmit={(onSubmit)}>
+                <div className="input-container">
+                    <label>Nombre </label>
+                    <input type="text" name="nombre" required onChange={ handleNameChange } placeholder="admin"/>
+                </div>
+                <div className="input-container">
+                    <label>Contraseña </label>
+                    <input type="password" name="contrasena" required onChange={ handleContrasenaChange } placeholder="123"/>
+                </div>
+                <div className="button-container">
+                    <input type="submit" />
+                </div>
             </form>
+            
         </div>
         
     );

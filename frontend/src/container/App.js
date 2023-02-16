@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-//import '../assets/styles/App.css';
 import Login from "./../components/Login"
 import Home from './../components/Home';
 

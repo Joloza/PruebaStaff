@@ -1,6 +1,7 @@
 // Requerimos el modulo de path el Html plugin que isntalamos
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // Creamos un nuevo modulo que vamos a exportar con esta configuracion
 // Vamos a configurar cada unos de los elementos que necesitamos
@@ -42,7 +43,28 @@ module.exports = {
           loader: "html-loader"
         }
       },
-      
+      {
+          //Regla para trabar con archivos de estilo SASS (SCSS)
+          //se encarga de identificar los archivos scss o css
+          test: /\.(s*)css$/,
+          // Utilizamos el loader de sass instalado
+          use: [
+              {
+                  loader: MiniCssExtractPlugin.loader,
+              },
+              'css-loader',
+              'sass-loader'
+          ]
+      },
+      { //regla para agregar el file loader de las imagenes en los componenetes
+        test: /\.(png|gif|jpg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: { name: 'assets/[hash].[ext]' },
+          }
+        ],
+      },
     ]
   },
   // Se añaden los plugins que necesitamos
@@ -54,5 +76,9 @@ module.exports = {
       template: "./public/index.html",
       filename: "./index.html"
     }),
+    //Donde esta ubicado los estilos que tenemos
+    new MiniCssExtractPlugin({
+        filename: "assets/[name].css"
+    })
   ]
 };
