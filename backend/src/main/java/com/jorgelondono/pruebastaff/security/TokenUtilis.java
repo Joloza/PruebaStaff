@@ -9,13 +9,13 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
-public class Token {
+public class TokenUtilis {
 
-    private final static String ACCESS_TOKER_SECRET = "OiJIUzI1NiIsInR5cCI6I";
-    private final static int ACCESS_TOKER_VALID_SECONDS = 1800;
+    private final static String ACCESS_TOKEN_SECRET = "OiJIUzI1NiIsInR5cCI6I1NiIsInR5cF";
+    private final static long ACCESS_TOKEN_VALID_SECONDS = 1800L;
 
     public static String createToken(String nombre, String email) {
-        long expirationTime = ACCESS_TOKER_VALID_SECONDS * 1_000;
+        long expirationTime = ACCESS_TOKEN_VALID_SECONDS * 1_000;
         Date expirationDate = new Date(System.currentTimeMillis() + expirationTime);
 
         Map<String, Object> extra = new HashMap<>();
@@ -25,7 +25,7 @@ public class Token {
                 .setSubject(email)
                 .setExpiration(expirationDate)
                 .addClaims(extra)
-                .signWith(Keys.hmacShaKeyFor(ACCESS_TOKER_SECRET.getBytes()))
+                .signWith(Keys.hmacShaKeyFor(ACCESS_TOKEN_SECRET.getBytes()))
                 .compact();
     }
 
@@ -33,7 +33,7 @@ public class Token {
 
         try {
             Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(ACCESS_TOKER_SECRET.getBytes())
+                    .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();

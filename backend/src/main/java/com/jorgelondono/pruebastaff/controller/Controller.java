@@ -26,9 +26,9 @@ public class Controller {
     @Autowired
     private UsuarioDao usuarioDao;
 
+    // usuario
+
     /*
-     * // usuario
-     * 
      * @PostMapping("/registrarUsuario")
      * public ResponseEntity<String> creareUser(@RequestBody Usuario usuario) {
      * Usuario existingUser = usuarioDao.findUsuarioByNombre(usuario.getNombre());
@@ -44,6 +44,16 @@ public class Controller {
      * }
      * }
      */
+
+    @PostMapping("/registrarUsuario")
+    public Usuario registrarUsuario(@RequestBody Usuario usuario) {
+        return usuarioDao.save(usuario);
+    }
+
+    @GetMapping("/consultarUsuario")
+    public Iterable<Usuario> consultarUsuario() {
+        return usuarioDao.findAll();
+    }
 
     // POST
     @PostMapping("/lists")
