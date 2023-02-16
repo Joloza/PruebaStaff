@@ -1,15 +1,11 @@
 package com.jorgelondono.pruebastaff.dao;
 
-import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
 import com.jorgelondono.pruebastaff.entities.Usuario;
 
-@Repository
-public interface UsuarioDao extends JpaRepository<Usuario, Integer> {
+public interface UsuarioDao extends CrudRepository<Usuario, Integer> {
 
-    Optional<Usuario> findOneByEmail(String email);
+    Iterable<Usuario> findByNombre(String nombre);
 
 }

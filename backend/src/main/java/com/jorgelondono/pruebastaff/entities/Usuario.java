@@ -15,8 +15,6 @@ public class Usuario {
     private String nombre;
 
     @Column(nullable = false)
-    private String email;
+    private String contrasena;
 
-    @Column(nullable = false)
-    private String password;
 }

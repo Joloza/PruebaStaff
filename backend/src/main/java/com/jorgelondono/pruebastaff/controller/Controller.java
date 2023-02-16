@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.jorgelondono.pruebastaff.entities.ListaReproduccion;
 import com.jorgelondono.pruebastaff.dao.ListaReproduccionDao;
 import com.jorgelondono.pruebastaff.entities.Usuario;
 import com.jorgelondono.pruebastaff.dao.UsuarioDao;
 
-@CrossOrigin(allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class Controller {
     @Autowired
@@ -28,23 +27,6 @@ public class Controller {
 
     // usuario
 
-    /*
-     * @PostMapping("/registrarUsuario")
-     * public ResponseEntity<String> creareUser(@RequestBody Usuario usuario) {
-     * Usuario existingUser = usuarioDao.findUsuarioByNombre(usuario.getNombre());
-     * if (existingUser != null) {
-     * return new ResponseEntity<String>("El usuario ya existe",
-     * HttpStatus.CONFLICT);
-     * } else {
-     * String contrasenaCifrada =
-     * bCryptPasswordEncoder.encode(usuario.getContrasena());
-     * usuario.setContrasena(contrasenaCifrada);
-     * usuarioDao.save(usuario);
-     * return new ResponseEntity<String>("Usuario creado", HttpStatus.OK);
-     * }
-     * }
-     */
-
     @PostMapping("/registrarUsuario")
     public Usuario registrarUsuario(@RequestBody Usuario usuario) {
         return usuarioDao.save(usuario);
@@ -53,6 +35,21 @@ public class Controller {
     @GetMapping("/consultarUsuario")
     public Iterable<Usuario> consultarUsuario() {
         return usuarioDao.findAll();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> authenticateUser(@RequestBody Usuario usuario) {
+        Iterable<Usuario> user = usuarioDao.findByNombre(usuario.getNombre());
+
+        if (user == null || !user.iterator().hasNext()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Credenciales inválidas");
+        }
+
+        if (((Usuario) user.iterator().next()).getContrasena().equals(usuario.getContrasena())) {
+            return ResponseEntity.ok("Token de acceso");
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Credenciales inválidas");
+        }
     }
 
     // POST
