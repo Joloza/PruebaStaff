@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+export const getLogin = (credenciales) => {
+    return axios.post('http://localhost:8081/login',credenciales);
+}
+
 export const getCrearLista = (lista) => {
   return axios.post('http://localhost:8081/lists',lista);
 }
