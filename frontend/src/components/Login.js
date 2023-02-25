@@ -1,6 +1,6 @@
 import React, {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {getRegistrarUsuario,getLogin} from "./../services/listaReproduccionApi";
+import {getLogin} from "./../services/listaReproduccionApi";
 import './../assets/styles.css';
 
 
@@ -19,19 +19,7 @@ const Login=()=>{
         setContrasena(event.target.value);
     }
 
-    const setUser = async () => {
-        const datos = {
-            "nombre": "admin",
-            "contrasena":"123"
-        };
-        try {
-            const response = await getRegistrarUsuario(datos);
-            alert("Usuario creado");
-            console.log('Usuario creado:', response.data);
-        } catch (error) {
-            console.error('Error al crear usuario:', error);
-        }
-    };
+    
 
     const loginUser = async () => {
         const datos = {

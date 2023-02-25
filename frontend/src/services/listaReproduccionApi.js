@@ -1,9 +1,5 @@
 import axios from 'axios';
 
-export const getRegistrarUsuario = (datos) => {
-    return axios.post('http://localhost:4000/registrarUsuario',datos);
-}
-
 export const getLogin = (credenciales) => {
     return axios.post('http://localhost:4000/login',credenciales);
 }

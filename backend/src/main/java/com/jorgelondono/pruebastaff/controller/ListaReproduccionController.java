@@ -23,25 +23,25 @@ import com.jorgelondono.pruebastaff.services.UsuarioServicio;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-public class Controller {
+public class ListaReproduccionController {
 	
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    @Transactional
+    /*@Transactional
     @PostMapping("/registrarUsuario")
     public String registrarUsuario(@RequestBody UsuarioDTO usuario) {   	
 
     	usuarioServicio.registrarUsuario(usuario);
     	
-        return "redirect:/registroUsuario?exito";
-    }
+        return "redirect:/registrarUsuario?exito";
+    }*/
 
-    @Transactional
+    /*@Transactional
     @GetMapping("/consultarUsuario")
     public List<Usuario> consultarUsuario() {
         return usuarioServicio.consultarUsuario();
-    }
+    }*/
 
     /*@PostMapping("/login")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO usuario) {
