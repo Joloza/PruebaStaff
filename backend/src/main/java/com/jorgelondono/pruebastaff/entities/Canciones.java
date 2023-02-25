@@ -2,9 +2,6 @@ package com.jorgelondono.pruebastaff.entities;
 
 import javax.persistence.*;
 
-import lombok.Data;
-
-@Data
 @Entity
 public class Canciones {
     @Id

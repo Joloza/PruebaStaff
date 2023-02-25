@@ -4,9 +4,7 @@ import java.util.*;
 
 import javax.persistence.*;
 
-import lombok.Data;
 
-@Data
 @Entity
 public class ListaReproduccion {
 

@@ -2,9 +2,6 @@ package com.jorgelondono.pruebastaff.entities;
 
 import javax.persistence.*;
 
-import lombok.Data;
-
-@Data
 @Entity
 public class Usuario {
     @Id
@@ -16,5 +13,42 @@ public class Usuario {
 
     @Column(nullable = false)
     private String contrasena;
+    
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
+	public Usuario(String nombre, String contrasena) {
+		super();
+		this.nombre = nombre;
+		this.contrasena = contrasena;
+	}
+
+	public Usuario() {
+		super();
+	}
+
+	
+	
 
 }

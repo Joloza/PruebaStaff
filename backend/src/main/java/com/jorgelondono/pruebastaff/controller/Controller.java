@@ -1,5 +1,9 @@
 package com.jorgelondono.pruebastaff.controller;
 
+import java.util.List;
+
+import javax.management.AttributeNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,33 +16,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.jorgelondono.pruebastaff.entities.ListaReproduccion;
-import com.jorgelondono.pruebastaff.dao.ListaReproduccionDao;
+import com.jorgelondono.pruebastaff.repository.ListaReproduccionDao;
 import com.jorgelondono.pruebastaff.entities.Usuario;
-import com.jorgelondono.pruebastaff.dao.UsuarioDao;
+import com.jorgelondono.pruebastaff.model.UsuarioDTO;
+import com.jorgelondono.pruebastaff.services.UsuarioServicio;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class Controller {
+	
     @Autowired
-    private ListaReproduccionDao listaDao;
+    private UsuarioServicio usuarioServicio;
 
-    @Autowired
-    private UsuarioDao usuarioDao;
-
-    // usuario
-
+    @Transactional
     @PostMapping("/registrarUsuario")
-    public Usuario registrarUsuario(@RequestBody Usuario usuario) {
-        return usuarioDao.save(usuario);
+    public String registrarUsuario(@RequestBody UsuarioDTO usuario) {   	
+
+    	usuarioServicio.registrarUsuario(usuario);
+    	
+        return "redirect:/registroUsuario?exito";
     }
 
+    @Transactional
     @GetMapping("/consultarUsuario")
-    public Iterable<Usuario> consultarUsuario() {
-        return usuarioDao.findAll();
+    public List<Usuario> consultarUsuario() {
+        return usuarioServicio.consultarUsuario();
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody Usuario usuario) {
+    /*@PostMapping("/login")
+    public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO usuario) {
         Iterable<Usuario> user = usuarioDao.findByNombre(usuario.getNombre());
 
         if (user == null || !user.iterator().hasNext()) {
@@ -90,6 +96,6 @@ public class Controller {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 
 }

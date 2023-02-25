@@ -1,4 +1,4 @@
-package com.jorgelondono.pruebastaff.dao;
+package com.jorgelondono.pruebastaff.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
