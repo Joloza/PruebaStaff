@@ -14,6 +14,17 @@ public class Usuario {
     @Column(nullable = false)
     private String contrasena;
     
+    public Usuario(String nombre, String contrasena) {
+		super();
+		this.nombre = nombre;
+		this.contrasena = contrasena;
+	}
+
+	public Usuario() {
+		super();
+	}
+
+    
     public int getId() {
 		return id;
 	}
@@ -38,16 +49,7 @@ public class Usuario {
 		this.contrasena = contrasena;
 	}
 
-	public Usuario(String nombre, String contrasena) {
-		super();
-		this.nombre = nombre;
-		this.contrasena = contrasena;
-	}
-
-	public Usuario() {
-		super();
-	}
-
+	
 	
 	
 

@@ -9,6 +9,8 @@ const UserRegister=()=>{
     const [contrasena, setContrasena] = useState('');
     const [validateAlert, setValidateAlert] = useState('');
 
+    let navigate = useNavigate();
+
     const nombreChange=(event)=>{
         setNombre(event.target.value);
     }
@@ -24,6 +26,7 @@ const UserRegister=()=>{
             const response = await getRegistrarUsuario(nombre,contrasena);
             setValidateAlert(response.data);
             console.log('Usuario creado:', response.data);
+            navigate('/');
         } catch (error) {
             console.error('Error al crear usuario:', error);
         }

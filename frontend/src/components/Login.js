@@ -19,15 +19,16 @@ const Login=()=>{
         setContrasena(event.target.value);
     }
 
+    function handleGoRegister(event) {
+        event.preventDefault();
+        navigate('/UserRegister');
+    }
+
     
 
     const loginUser = async () => {
-        const datos = {
-            nombre: nombre,
-            contrasena: contrasena
-        };
         try {
-            const response = await getLogin(datos);
+            const response = await getLogin(nombre,contrasena);
             const token = response.data;
             localStorage.setItem('token', token);
             navigate('/Home');
@@ -47,8 +48,6 @@ const Login=()=>{
         
 
         <div className="formLogin">
-            <label>1-Se debe registrar el usuario para poder acceder </label>
-            <input className="buttonHome" type="submit" value="Registrar usuario" onClick={setUser}/>
             <form onSubmit={(onSubmit)}>
                 <div className="input-container">
                     <label>Nombre </label>
@@ -62,6 +61,10 @@ const Login=()=>{
                     <input type="submit" />
                 </div>
             </form>
+
+            <div>
+                <button className='button-eliminar' onClick={handleGoRegister}>Register</button>
+            </div>
             
         </div>
         

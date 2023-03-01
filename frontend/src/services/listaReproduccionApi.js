@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const getLogin = (credenciales) => {
-    return axios.post('http://localhost:4000/login',credenciales);
+export const getLogin = (nombre,contrasena) => {
+    return axios.post('http://localhost:4000/login',{nombre,contrasena});
 }
 
 export const getCrearLista = (lista) => {

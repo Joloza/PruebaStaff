@@ -31,6 +31,13 @@ public class UsuarioController {
     	
         return "exito";
     }
+    
+    /*@PostMapping("/login")
+    public String authenticateUser(@RequestBody String usuario) {
+    	usuarioServicio.loadUserByUsername(usuario);
+    	return "hola";
+    }*/
+  
 
     @Transactional
     @GetMapping("/consultarUsuario")
