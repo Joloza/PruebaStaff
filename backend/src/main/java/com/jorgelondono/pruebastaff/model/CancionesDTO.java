@@ -1,29 +1,14 @@
-package com.jorgelondono.pruebastaff.entities;
+package com.jorgelondono.pruebastaff.model;
 
-import javax.persistence.*;
+public class CancionesDTO {
 
-@Entity
-public class Canciones {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(nullable = false)
-    private String titulo;
-
-    @Column(nullable = true)
+	private String titulo;
     private String artista;
-
-    @Column(nullable = true)
     private String album;
-
-    @Column(nullable = true)
     private String anno;
-
-    @Column(nullable = true)
     private String genero;
-
-	public Canciones(String titulo, String artista, String album, String anno, String genero) {
+    
+	public CancionesDTO(String titulo, String artista, String album, String anno, String genero) {
 		super();
 		this.titulo = titulo;
 		this.artista = artista;
@@ -32,7 +17,7 @@ public class Canciones {
 		this.genero = genero;
 	}
     
-	public Canciones() {
+	public CancionesDTO() {
 		super();
 	}
 
@@ -77,6 +62,5 @@ public class Canciones {
 	}
 	
 	
-    
     
 }

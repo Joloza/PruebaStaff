@@ -3,6 +3,7 @@ package com.jorgelondono.pruebastaff.controller;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,20 +26,12 @@ public class UsuarioController {
 
     @Transactional
     @PostMapping("/registrarUsuario")
-    public String registrarUsuario(@RequestBody UsuarioDTO usuario) {   	
+    public ResponseEntity<Usuario> registrarUsuario(@RequestBody UsuarioDTO usuario) {   	
 
-    	usuarioServicio.registrarUsuario(usuario);
-    	
-        return "exito";
+    	   	
+        return usuarioServicio.registrarUsuario(usuario);
     }
     
-    /*@PostMapping("/login")
-    public String authenticateUser(@RequestBody String usuario) {
-    	usuarioServicio.loadUserByUsername(usuario);
-    	return "hola";
-    }*/
-  
-
     @Transactional
     @GetMapping("/consultarUsuario")
     public List<Usuario> consultarUsuario() {

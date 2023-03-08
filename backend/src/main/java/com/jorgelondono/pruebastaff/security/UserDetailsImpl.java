@@ -15,8 +15,8 @@ public class UserDetailsImpl implements UserDetails {
 	@Autowired
     private Usuario usuario;
 
-    public UserDetailsImpl(Usuario usuario2) {
-		this.usuario=usuario2;
+    public UserDetailsImpl(Usuario usuario) {
+		this.usuario=usuario;
 	}
 
 	@Override

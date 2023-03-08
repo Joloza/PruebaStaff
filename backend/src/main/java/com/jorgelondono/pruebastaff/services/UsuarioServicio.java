@@ -11,7 +11,6 @@ import com.jorgelondono.pruebastaff.model.UsuarioDTO;
 public interface UsuarioServicio extends UserDetailsService{
 	
 	public ResponseEntity<Usuario> registrarUsuario(UsuarioDTO usuarioDTO);
-
 	public List<Usuario> consultarUsuario();
 
 }
