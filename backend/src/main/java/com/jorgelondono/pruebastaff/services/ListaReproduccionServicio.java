@@ -11,5 +11,6 @@ public interface ListaReproduccionServicio {
 	
 	public ResponseEntity<ListaReproduccion> crearLista(ListaReproduccionDTO listaDTO);
 	public List<ListaReproduccion> consultarLista();
+	public ResponseEntity<Void> borrarLista(ListaReproduccionDTO listaDTO);
 	
 }

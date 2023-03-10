@@ -22,25 +22,21 @@ public class ListaReproduccionServicioImpl implements ListaReproduccionServicio{
 
 	@Override
 	public ResponseEntity<ListaReproduccion> crearLista(ListaReproduccionDTO listaDTO) {
-		ResponseEntity<ListaReproduccion> result=null;
+		
 		
 		if(listaDTO.getNombre().isEmpty()) {
 			
-			result = ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().build();
 			
 		}else if(listaDTO.getDescripcion().isEmpty()) {
 			
-			result = ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().build();
 			
-		}else {
-			/*ListaReproduccion lista = new ListaReproduccion();			
-			
-		    BeanUtils.copyProperties(listaDTO, lista);
-		    
-		    ListaReproduccion listaGuardada = listaDao.save(lista);
-			result = ResponseEntity.status(HttpStatus.CREATED).body(listaGuardada);*/
-			
-		
+		}else if (listaDao.existsByNombre(listaDTO.getNombre())){
+						
+			return ResponseEntity.badRequest().build();
+			 
+		} else {
 			ListaReproduccion lista = new ListaReproduccion();			
 
 		    BeanUtils.copyProperties(listaDTO, lista);
@@ -55,17 +51,24 @@ public class ListaReproduccionServicioImpl implements ListaReproduccionServicio{
 		    lista.setCanciones(canciones);
 				    
 		    ListaReproduccion listaGuardada = listaDao.save(lista);
-		    result = ResponseEntity.status(HttpStatus.CREATED).body(listaGuardada); 
-		
-			 
+		    return ResponseEntity.status(HttpStatus.CREATED).body(listaGuardada);
 		}
 		
-		return result;
 	}
 
 	@Override
 	public List<ListaReproduccion> consultarLista() {
 		return listaDao.findAll();
+	}
+
+	@Override
+	public ResponseEntity<Void> borrarLista(ListaReproduccionDTO listaDTO) {
+		if (listaDao.existsByNombre(listaDTO.getNombre())) {
+            listaDao.deleteByNombre(listaDTO.getNombre());
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
 	}
 
 

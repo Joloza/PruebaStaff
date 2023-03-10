@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,14 +28,12 @@ public class ListaReproduccionController {
     // POST
     @Transactional
     @PostMapping("/lists")
-    public ResponseEntity<ListaReproduccion> crearLista(@RequestBody ListaReproduccionDTO listaDTO) {    	        
-    	
-    	return listaServicio.crearLista(listaDTO);
-    	
+    public ResponseEntity<ListaReproduccion> crearLista(@RequestBody ListaReproduccionDTO listaDTO) {    	
+    	return listaServicio.crearLista(listaDTO);   	
     }
  
     @Transactional
-    @GetMapping("/GETlists")
+    @GetMapping("/lists")
     public List<ListaReproduccion> consultarUsuario() {
         return listaServicio.consultarLista();
     }
@@ -48,18 +47,19 @@ public class ListaReproduccionController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 
     // DELETE
-    @Transactional
+    /*@Transactional
     @DeleteMapping("/lists/listName")
     public ResponseEntity<Void> borrarLista(@RequestParam String nombre) {
-        if (listaDao.existsByNombre(nombre)) {
-            listaDao.deleteByNombre(nombre);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        
     }*/
+    
+    @Transactional
+    @DeleteMapping("/lists/listName")
+    public ResponseEntity<Void> borrarLista(@RequestBody ListaReproduccionDTO listaDTO) {
+		return listaServicio.borrarLista(listaDTO);        
+    }
 
 }

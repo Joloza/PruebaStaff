@@ -34,8 +34,8 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers("/registrarUsuario", "/consultarUsuario","/GETlists").permitAll() //Quitar "/consultarUsuario" y "/GETlists"
-                .antMatchers("/lists").authenticated()
+                .antMatchers("/registrarUsuario", "/consultarUsuario").permitAll() //Quitar "/consultarUsuario" y "/GETlists"
+                .antMatchers("/lists","/lists/listName").authenticated()
                 .anyRequest()
                 .authenticated()
                 /*

@@ -31,20 +31,17 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	@Override
 	public ResponseEntity<Usuario> registrarUsuario(UsuarioDTO usuarioDTO)  {
 		
-		ResponseEntity<Usuario> result=null;
-				
 		if(usuarioDTO.getNombre().isEmpty()) {					
 			
-			result = ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().build();
 			
 		}else if(usuarioDTO.getContrasena().isEmpty()) {
-			result = ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().build();
 		} else {
 			Usuario usuario= new Usuario(usuarioDTO.getNombre(), passwordEncoder.encode(usuarioDTO.getContrasena()));
 			Usuario usuarioGuardado = usuarioDao.save(usuario);
-			result = ResponseEntity.status(HttpStatus.CREATED).body(usuarioGuardado);
+			return ResponseEntity.status(HttpStatus.CREATED).body(usuarioGuardado);
 		}	
-		return result;
 	}
 
 	@Override

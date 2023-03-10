@@ -26,9 +26,7 @@ public class UsuarioController {
 
     @Transactional
     @PostMapping("/registrarUsuario")
-    public ResponseEntity<Usuario> registrarUsuario(@RequestBody UsuarioDTO usuario) {   	
-
-    	   	
+    public ResponseEntity<Usuario> registrarUsuario(@RequestBody UsuarioDTO usuario) {    	   	
         return usuarioServicio.registrarUsuario(usuario);
     }
     
