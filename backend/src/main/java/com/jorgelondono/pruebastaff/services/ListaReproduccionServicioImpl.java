@@ -62,9 +62,9 @@ public class ListaReproduccionServicioImpl implements ListaReproduccionServicio{
 	}
 
 	@Override
-	public ResponseEntity<Void> borrarLista(ListaReproduccionDTO listaDTO) {
-		if (listaDao.existsByNombre(listaDTO.getNombre())) {
-            listaDao.deleteByNombre(listaDTO.getNombre());
+	public ResponseEntity<Void> borrarLista(String nombre) {
+		if (listaDao.existsByNombre(nombre)) {
+            listaDao.deleteByNombre(nombre);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();

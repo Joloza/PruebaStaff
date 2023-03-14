@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jorgelondono.pruebastaff.entities.ListaReproduccion;
 import com.jorgelondono.pruebastaff.entities.Usuario;
@@ -20,6 +22,7 @@ import com.jorgelondono.pruebastaff.services.ListaReproduccionServicio;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping("/api")
 public class ListaReproduccionController {
 	
     @Autowired
@@ -58,8 +61,8 @@ public class ListaReproduccionController {
     
     @Transactional
     @DeleteMapping("/lists/listName")
-    public ResponseEntity<Void> borrarLista(@RequestBody ListaReproduccionDTO listaDTO) {
-		return listaServicio.borrarLista(listaDTO);        
+    public ResponseEntity<Void> borrarLista(@RequestParam String nombre) {
+		return listaServicio.borrarLista(nombre);        
     }
 
 }

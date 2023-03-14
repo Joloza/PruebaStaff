@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import './../assets/styles.css';
+import { useNavigate } from 'react-router-dom';
+import './../assets/styles/styles.css';
 import { getCrearLista,getConsultarLista,getBorrarLista} from "./../services/listaReproduccionApi";
+import api from "../services/api";
 
 const Home = () => {
 
@@ -16,6 +18,13 @@ const Home = () => {
     const [listas, setListas] = useState([]);
     const [listaCanciones, setListaCanciones] = useState([]);
 
+    let navigate = useNavigate();
+
+    function handleLogout(event) {
+        event.preventDefault();
+        navigate('/');
+    }
+
     const mostrarCanciones = (index) => {
         const listaSeleccionada = listas[index];
         setListaCanciones(listaSeleccionada.canciones);
@@ -28,18 +37,38 @@ const Home = () => {
             "descripcion": descripcion,
             "canciones": canciones
         };
+
         try {
+            //const response = await api.post('/lists', {nombre,});
+            await getCrearLista(nombre,descripcion,canciones).then((response) => {
+                console.log('Lista creada con éxito:', response.data);
+                setNombre("");
+                setDescripcion("");
+                setCanciones([]);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+            
+          } catch (error) {
+            console.error('Error al crear la lista:', error);
+          }
+
+        /*try {
             const response = await getCrearLista(lista);
             alert("Lista creada");
             console.log('Lista creada con éxito:', response.data);
         } catch (error) {
             alert("ERROR");
             console.error('Error al crear la lista:', error);
-        }
+        }*/
     };
 
     const getAllPlayList = async (event) => {
         event.preventDefault();
+
+        
+
         try {
             const response = await getConsultarLista();
             setListas(response.data);
@@ -67,11 +96,16 @@ const Home = () => {
     }; */
 
     const deletePlayListByName = async (nombre) => {
-        
+        console.log("NOMBREEEEE",nombre)
+
         try {
             const response = await getBorrarLista(nombre);
             alert("Lista eliminada");
             console.log('Lista consultada con éxito:', response.data);
+            setListas([]);
+            setListaCanciones([]);
+            const response2 = await getConsultarLista();
+            setListas(response2.data);
         } catch (error) {
             alert("ERROR");
             console.error('Error al consultar la lista:', error);
@@ -98,17 +132,18 @@ const Home = () => {
 
     return (
         <div style={{ display: 'flex' }}>
+            <button  className='obetenerCanciones' type="button" onClick={handleLogout}>Cerrar sesión</button>
             <div style={{ flex: 1 }}>
                 <form onSubmit={setPlayList} className="form">
                     <h3>Lista de reproduccion</h3>
                     <label>
                         Nombre:
-                        <input type="text" name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+                        <input type="text" name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} /*required*/ />
                     </label>
                     <br />
                     <label>
                         Descripción:
-                        <input type="text" name="descripcion" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required />
+                        <input type="text" name="descripcion" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} /*required*/ />
                     </label>
                     <br />
                     <h3>Canciones</h3>
@@ -116,27 +151,27 @@ const Home = () => {
                         <div key={index}>
                         <label>
                             Título:
-                            <input type="text" name="titulo" value={cancion.titulo} onChange={(e) => handleCancionChange(e, index)} required />
+                            <input type="text" name="titulo" value={cancion.titulo} onChange={(e) => handleCancionChange(e, index)} /*required*/ />
                         </label>
                         <br />
                         <label>
                             Artista:
-                            <input type="text" name="artista" value={cancion.artista} onChange={(e) => handleCancionChange(e, index)} required />
+                            <input type="text" name="artista" value={cancion.artista} onChange={(e) => handleCancionChange(e, index)} /*required*/ />
                         </label>
                         <br />
                         <label>
                             Álbum:
-                            <input type="text" name="album" value={cancion.album} onChange={(e) => handleCancionChange(e, index)} required />
+                            <input type="text" name="album" value={cancion.album} onChange={(e) => handleCancionChange(e, index)} /*required*/ />
                         </label>
                         <br />
                         <label>
                             Año:
-                            <input type="text" name="anno" value={cancion.anno} onChange={(e) => handleCancionChange(e, index)} required />
+                            <input type="text" name="anno" value={cancion.anno} onChange={(e) => handleCancionChange(e, index)} /*required*/ />
                         </label>
                         <br />
                         <label>
                             Género:
-                            <input type="text" name="genero" value={cancion.genero} onChange={(e) => handleCancionChange(e, index)} required />
+                            <input type="text" name="genero" value={cancion.genero} onChange={(e) => handleCancionChange(e, index)} /*required*/ />
                         </label>
                         <br />
                         <br />

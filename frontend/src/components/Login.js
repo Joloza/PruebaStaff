@@ -1,7 +1,8 @@
 import React, {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {getLogin} from "./../services/listaReproduccionApi";
-import './../assets/styles.css';
+import {getLogin} from "./../services/UsuarioApi";
+import './../assets/styles/fonts.css'
+import './../assets/styles/styles.css';
 
 
 const Login=()=>{
@@ -24,13 +25,12 @@ const Login=()=>{
         navigate('/UserRegister');
     }
 
-    
-
     const loginUser = async () => {
         try {
             const response = await getLogin(nombre,contrasena);
-            const token = response.data;
+            const token = response.headers["authorization"];
             localStorage.setItem('token', token);
+            console.log('TOKEN 1', token);
             navigate('/Home');
             return token;
         } catch (error) {
@@ -39,23 +39,21 @@ const Login=()=>{
         }
     }
 
-  const onSubmit = ( event ) => {
-    event.preventDefault();
-    loginUser();
-}
+    const onSubmit = ( event ) => {
+        event.preventDefault();
+        loginUser();
+    }
 
     return(
-        
-
         <div className="formLogin">
             <form onSubmit={(onSubmit)}>
                 <div className="input-container">
                     <label>Nombre </label>
-                    <input type="text" name="nombre" required onChange={ handleNameChange } placeholder="admin"/>
+                    <input type="text" name="nombre" required onChange={ handleNameChange } placeholder=""/>
                 </div>
                 <div className="input-container">
                     <label>Contraseña </label>
-                    <input type="password" name="contrasena" required onChange={ handleContrasenaChange } placeholder="123"/>
+                    <input type="password" name="contrasena" required onChange={ handleContrasenaChange } placeholder=""/>
                 </div>
                 <div className="button-container">
                     <input type="submit" />
