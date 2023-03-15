@@ -1,7 +1,8 @@
 import React, {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {getRegistrarUsuario} from "./../services/UsuarioApi";
-import './../assets/styles/styles.css';
+import {getRegistrarUsuario} from "../services/UsuarioApi";
+import '../assets/styles/fonts.css'
+import '../assets/styles/styles.css'
 
 const UserRegister=()=>{
 

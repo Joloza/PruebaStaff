@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState,useContext,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import './../assets/styles/styles.css';
-import { getCrearLista,getConsultarLista,getBorrarLista} from "./../services/listaReproduccionApi";
-import api from "../services/api";
+import { getCrearLista,getConsultarLista,getBorrarLista} from "../services/listaReproduccionApi";
+import { AuthContext } from '../auth/AuthContext';
+import '../assets/styles/fonts.css'
+import '../assets/styles/styles.css'
 
 const Home = () => {
 
@@ -17,18 +18,19 @@ const Home = () => {
     }]);
     const [listas, setListas] = useState([]);
     const [listaCanciones, setListaCanciones] = useState([]);
+    const { logout, token } = useContext(AuthContext);
 
     let navigate = useNavigate();
 
     function handleLogout(event) {
         event.preventDefault();
-        navigate('/');
+        logout();
     }
 
     const mostrarCanciones = (index) => {
         const listaSeleccionada = listas[index];
         setListaCanciones(listaSeleccionada.canciones);
-      };
+        };
 
     const setPlayList = async (event) => {
         event.preventDefault();
@@ -45,14 +47,14 @@ const Home = () => {
                 setNombre("");
                 setDescripcion("");
                 setCanciones([]);
-              })
-              .catch((error) => {
+                })
+                .catch((error) => {
                 console.error(error);
-              });
+                });
             
-          } catch (error) {
+            } catch (error) {
             console.error('Error al crear la lista:', error);
-          }
+            }
 
         /*try {
             const response = await getCrearLista(lista);
@@ -112,23 +114,36 @@ const Home = () => {
         }
     };
 
-      const handleCancionChange = (event, index) => {
+    const handleCancionChange = (event, index) => {
         const { name, value } = event.target;
         const newCanciones = [...canciones];
         newCanciones[index][name] = value;
         setCanciones(newCanciones);
-      };
-    
-      const addCancion = () => {
+    };
+
+    const addCancion = () => {
         const newCanciones = [...canciones, {
-          titulo: '',
-          artista: '',
-          album: '',
-          anno: '',
-          genero: '',
+            titulo: '',
+            artista: '',
+            album: '',
+            anno: '',
+            genero: '',
         }];
         setCanciones(newCanciones);
-      };
+    };
+
+    useEffect(() => {
+
+        console.log("TOKEN",token)
+
+        if(token==null){
+            navigate('/');
+        }
+
+        /* return (
+        ); */
+        
+    }, []);
 
     return (
         <div style={{ display: 'flex' }}>
@@ -206,7 +221,7 @@ const Home = () => {
                 
                 ))}
                 </div>
-                 
+                    
                 <div>
                         {listaCanciones.length > 0 && (
                         <ul>
@@ -224,7 +239,7 @@ const Home = () => {
                 
             </div>
         </div>       
-  
+
     );
 };
 

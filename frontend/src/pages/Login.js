@@ -1,15 +1,19 @@
-import React, {useState } from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import {getLogin} from "./../services/UsuarioApi";
-import './../assets/styles/fonts.css'
-import './../assets/styles/styles.css';
+import { AuthContext } from '../auth/AuthContext';
+import '../assets/styles/fonts.css'
+import '../assets/styles/styles.css'
 
-
+/*localStorage.clear();
+const token = localStorage.getItem('token');
+console.log(token);*/
+ 
 const Login=()=>{
 
     const [nombre, setNombre] = useState('');
     const [contrasena, setContrasena] = useState('');
 
+    const { login, token } = useContext(AuthContext);
     let navigate = useNavigate();
 
     function handleNameChange(event) {
@@ -26,23 +30,46 @@ const Login=()=>{
     }
 
     const loginUser = async () => {
-        try {
+        /* try {
             const response = await getLogin(nombre,contrasena);
             const token = response.headers["authorization"];
-            localStorage.setItem('token', token);
-            console.log('TOKEN 1', token);
-            navigate('/Home');
-            return token;
+            const token2 = localStorage.getItem('token');
+            console.log("TOKEN",token);
+            console.log("TOKEN2",token2);
+            //localStorage.setItem('token', token);
+            auth.setToken(token);
+            
+            //navigate('/Home');
+            //return token;
         } catch (error) {
             alert("ERROR", error);
             console.error('Error al iniciar sesión:', error);
-        }
+        } */
+
+        //await handleUserLogin(nombre,contrasena);
     }
 
-    const onSubmit = ( event ) => {
+    const onSubmit = async ( event ) => {
         event.preventDefault();
-        loginUser();
+        //handleUserLogin(nombre,contrasena);
+        //loginUser();
+        await login(nombre,contrasena)
     }
+
+    useEffect(() => {
+
+        console.log("TOKEN",token)
+
+        if(token==null){
+            navigate('/');
+        }else if(token!=null){
+            navigate('/Home');
+        }
+
+        /* return (
+        ); */
+        
+    }, []);
 
     return(
         <div className="formLogin">

@@ -12,7 +12,7 @@ import io.jsonwebtoken.security.Keys;
 public class TokenUtilis {
 
     private static final String ACCESS_TOKEN_SECRET = "OiJIUzI1NiIsInR5cCI6I1NiIsInR5cF";
-    private static final long ACCESS_TOKEN_VALID_SECONDS = 1800L;
+    private static final long ACCESS_TOKEN_VALID_SECONDS = 600L;
 
     public static String createToken(String nombre) {
         long expirationTime = ACCESS_TOKEN_VALID_SECONDS * 1_000;
